@@ -1,7 +1,9 @@
 package com.springapp.blog.dao;
 
+import com.springapp.blog.entity.Role;
 import com.springapp.blog.entity.User;
 import com.springapp.blog.models.user.UserRegisterModel;
+import com.springapp.blog.repository.RoleRepository;
 import com.springapp.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,14 +19,18 @@ import javax.servlet.http.HttpServletResponse;
 public class UserDao {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserDao(UserRepository userRepository) {
+    public UserDao(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public void register(UserRegisterModel userRegisterModel){
         User user = new User(userRegisterModel.getEmail(), userRegisterModel.getFullname(), new BCryptPasswordEncoder().encode(userRegisterModel.getPassword()));
+        Role role = roleRepository.findByName("ROLE_USER");
+        user.addRole(role);
 
         userRepository.saveAndFlush(user);
     }

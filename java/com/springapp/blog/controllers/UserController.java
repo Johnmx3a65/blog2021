@@ -69,6 +69,6 @@ public class UserController {
 
         userDao.register(userRegisterModel);
 
-        return "redirect: /login";
+        return "redirect:/login";
     }
 }
