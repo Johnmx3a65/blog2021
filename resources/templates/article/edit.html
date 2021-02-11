@@ -1,0 +1,43 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/article/edit/{id}(id=${article.id})}" th:method="PATCH" th:object="${article}">
+                <fieldset>
+                    <legend>Edit Post</legend>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="title">Post Title</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="title" placeholder="Post Title" th:field="*{title}" th:value="${article.title}"/>
+                            <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="content">Content</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" rows="6" id="content" th:field="*{content}" th:value="${article.content}"></textarea>
+                            <div style="color: red" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="category">Category</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="category" th:field="*{category}">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"  th:selected="${category.id == article.category}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/article/{id}(id = ${article.id})}">Cancel</a>
+                            <input type="submit" class="btn btn-success" value="Edit"/>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>

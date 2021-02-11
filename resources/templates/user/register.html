@@ -1,0 +1,45 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/register}" th:method="post" th:object="${user}">
+                <fieldset>
+                    <legend>Register</legend>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="email">Email</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="email" id="email" placeholder="Email" th:field="*{email}" required="required"/>
+                            <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="fullname">Full Name</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="text" id="fullname" placeholder="Full Name" th:field="*{fullName}" required="required"/>
+                            <div style="color: red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Full name error</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="password_first">Password</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="password_first" placeholder="Password" th:field="*{password}" required="required"/>
+                            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="password_second">Confirm Password</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="password_second" placeholder="Password" th:field="*{confirmPassword}" required="required"/>
+                            <div style="color: red" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">ConfirmPassword error</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/}">Cancel</a>
+                            <input value="Submit" type="submit" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>
