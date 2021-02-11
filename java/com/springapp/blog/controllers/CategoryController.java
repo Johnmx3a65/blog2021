@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/admin/categories")
@@ -46,6 +43,41 @@ public class CategoryController {
         }
 
         categoryDao.create(categoryModel);
+
+        return "redirect:/admin/categories/";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable("id") Integer id){
+        model.addAttribute("view", "admin/categories/edit");
+        model.addAttribute("category", categoryDao.getOne(id));
+
+        return "base-layout";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editProcess(Model model, @PathVariable("id") Integer id, @ModelAttribute("category") CategoryModel categoryModel, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("view", "admin/categories/edit");
+            return "base-layout";
+        }
+
+        categoryDao.edit(id, categoryModel);
+
+        return "redirect:/admin/categories/";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable("id") Integer id){
+        model.addAttribute("view", "admin/categories/delete");
+        model.addAttribute("category", categoryDao.getOne(id));
+
+        return "base-layout";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteProcess(@PathVariable("id") Integer id){
+        categoryDao.delete(id);
 
         return "redirect:/admin/categories/";
     }

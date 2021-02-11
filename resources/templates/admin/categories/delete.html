@@ -1,14 +1,14 @@
 <main>
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" th:action="@{/admin/categories/delete/{id}(id=${category.id})}" th:object="${category}" th:method="DELETE">
+            <form class="form-horizontal" th:action="@{/admin/categories/delete/{id}(id=${category.id})}" th:object="${category}" method="post">
                 <fieldset>
                     <legend>Delete Category</legend>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="name">Category Name</label>
                         <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="name" placeholder="Category Name" th:field="*{name}" th:value="${category.name}" disabled="disabled"/>
+                            <input type="text" class="form-control" id="name" placeholder="Category Name" th:field="*{name}" th:value="${category.name}" name="name" disabled="disabled"/>
                         </div>
                     </div>
 
