@@ -1,6 +1,7 @@
 package com.springapp.blog.dao;
 
 import com.springapp.blog.entity.Category;
+import com.springapp.blog.models.CategoryModel;
 import com.springapp.blog.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,5 +20,11 @@ public class CategoryDao {
 
     public List<Category> list(){
         return categoryRepository.findAll();
+    }
+
+    public void create(CategoryModel categoryModel){
+        Category category = new Category(categoryModel.getName());
+
+        categoryRepository.saveAndFlush(category);
     }
 }
