@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class BlogUserDetails extends User implements UserDetails {
-    private ArrayList<String> roles;
-    private User user;
+    private final ArrayList<String> roles;
+    private final User user;
 
     public BlogUserDetails(User user, ArrayList<String> roles) {
+
         super(user.getEmail(), user.getFullName(), user.getPassword());
 
         this.roles = roles;

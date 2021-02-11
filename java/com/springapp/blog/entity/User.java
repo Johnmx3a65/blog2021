@@ -22,6 +22,7 @@ public class User {
     private List<Article> articles;
 
     public User(String email, String fullName, String password) {
+
         this.email = email;
         this.password = password;
         this.fullName = fullName;

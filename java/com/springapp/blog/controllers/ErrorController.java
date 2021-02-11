@@ -10,6 +10,7 @@ public class ErrorController {
     @GetMapping("/error")
     public String error(Model model){
         model.addAttribute("view", "error/500.html");
+        model.addAttribute("message", "Oooops we have error! Please try later");
 
         return "base-layout";
     }
