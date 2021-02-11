@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -30,6 +32,12 @@ public class UserController {
         model.addAttribute("user", new UserLoginModel());
 
         return "base-layout";
+    }
+
+    @GetMapping("/logout")
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response){
+        userDao.logout(request, response);
+        return "redirect:/login?logout";
     }
 
     @GetMapping("/register")

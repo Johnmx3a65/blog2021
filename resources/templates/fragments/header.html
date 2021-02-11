@@ -13,7 +13,7 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
+                    <li class="dropdown" sec:authorize="hasRole('ADMIN')">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a th:href="@{/admin/categories/}">Categories</a></li>
@@ -22,31 +22,31 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/article/create}">
+                        <a th:href="@{/article/create}" sec:authorize="isAuthenticated()">
                             Create Article
                         </a>
                     </li>
 
                     <li>
-                        <a th:href="@{/profile}">
+                        <a th:href="@{/profile}" sec:authorize="isAuthenticated()">
                             My Profile
                         </a>
                     </li>
 
                     <li>
-                        <a th:href="@{/logout}">
+                        <a th:href="@{/logout}" sec:authorize="isAuthenticated()">
                             Logout
                         </a>
                     </li>
 
                     <li>
-                        <a th:href="@{/register}">
+                        <a th:href="@{/register}" sec:authorize="isAnonymous()">
                             REGISTER
                         </a>
                     </li>
 
                     <li>
-                        <a th:href="@{/login}">
+                        <a th:href="@{/login}" sec:authorize="isAnonymous()">
                             LOGIN
                         </a>
                     </li>
