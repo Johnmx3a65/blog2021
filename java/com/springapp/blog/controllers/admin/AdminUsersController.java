@@ -4,7 +4,6 @@ import com.springapp.blog.dao.RoleDao;
 import com.springapp.blog.dao.UserDao;
 import com.springapp.blog.entity.User;
 import com.springapp.blog.models.user.UserEditModel;
-import com.springapp.blog.models.user.UserRegisterModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/admin/users")
 public class AdminUsersController {
 
     private final UserDao userDao;
@@ -27,7 +26,7 @@ public class AdminUsersController {
         this.roleDao = roleDao;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/")
     public String list(Model model){
         model.addAttribute("view", "admin/users/list");
         model.addAttribute("users", userDao.list());
@@ -35,13 +34,13 @@ public class AdminUsersController {
         return "base-layout";
     }
 
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") Integer id){
 
         User user = userDao.getOne(id);
 
         if (user == null){
-            return "redirect:/admin/users";
+            return "redirect:/admin/users/";
         }
 
         model.addAttribute("view", "admin/users/edit");
@@ -51,8 +50,14 @@ public class AdminUsersController {
         return "base-layout";
     }
 
-    @PostMapping("/users/edit/{id}")
+    @PostMapping("/edit/{id}")
     public String editProcess(Model model, @PathVariable("id") Integer id, @ModelAttribute("user") @Valid UserEditModel userEditModel, BindingResult bindingResult){
+        User user = userDao.getOne(id);
+
+        if (user == null){
+            return "redirect:/admin/users/";
+        }
+
         if (bindingResult.hasErrors()){
             model.addAttribute("view", "admin/users/edit");
             model.addAttribute("roles", roleDao.getAll());
@@ -78,6 +83,33 @@ public class AdminUsersController {
 
         userDao.edit(id, userEditModel);
 
-        return "redirect:/admin/users";
+        return "redirect:/admin/users/";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable("id") Integer id){
+        User user = userDao.getOne(id);
+
+        if (user == null){
+            return "redirect:/admin/users/";
+        }
+
+        model.addAttribute("view", "admin/users/delete");
+        model.addAttribute("user", user);
+
+        return "base-layout";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteProcess(@PathVariable("id") Integer id){
+        User user = userDao.getOne(id);
+
+        if (user == null){
+            return "redirect:/admin/users/";
+        }
+
+        userDao.delete(id);
+
+        return "redirect:/admin/users/";
     }
 }
