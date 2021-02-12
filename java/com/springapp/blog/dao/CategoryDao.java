@@ -46,7 +46,11 @@ public class CategoryDao {
     public Category getOne(Integer id){
         return categoryRepository.getOne(id);
     }
-    
+
+    public boolean isAlreadyExist(String name){
+        return categoryRepository.getByName(name) != null;
+    }
+
     public void delete(Integer id){
         articleRepository.deleteAllByCategory(categoryRepository.getOne(id));
         categoryRepository.deleteById(id);
