@@ -44,7 +44,7 @@ public class CategoryDao {
     }
 
     public Category getOne(Integer id){
-        return categoryRepository.getOne(id);
+        return categoryRepository.findById(id).orElse(null);
     }
 
     public boolean isAlreadyExist(String name){

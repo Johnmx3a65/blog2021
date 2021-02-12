@@ -3,6 +3,7 @@ package com.springapp.blog.repository;
 
 import com.springapp.blog.entity.Article;
 import com.springapp.blog.entity.Category;
+import com.springapp.blog.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
     public void deleteAllByCategory(Category category);
+
+    public void deleteAllByAuthor(User user);
 }

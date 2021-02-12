@@ -2,7 +2,9 @@ package com.springapp.blog.dao;
 
 import com.springapp.blog.entity.Role;
 import com.springapp.blog.entity.User;
+import com.springapp.blog.models.user.UserEditModel;
 import com.springapp.blog.models.user.UserRegisterModel;
+import com.springapp.blog.repository.ArticleRepository;
 import com.springapp.blog.repository.RoleRepository;
 import com.springapp.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +16,46 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Component
 public class UserDao {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final ArticleRepository articleRepository;
+
 
     @Autowired
-    public UserDao(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserDao(UserRepository userRepository, RoleRepository roleRepository, ArticleRepository articleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.articleRepository = articleRepository;
+    }
+
+    public List<User> list(){
+        return userRepository.findAll();
+    }
+
+    public User getOne(Integer id){
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public void edit(Integer id, UserEditModel user){
+        User dbUser = userRepository.getOne(id);
+
+        dbUser.setEmail(user.getEmail());
+        dbUser.setFullName(user.getFullName());
+        dbUser.setPassword(user.getPassword());
+
+        userRepository.saveAndFlush(dbUser);
+    }
+
+    public void delete(Integer id){
+        User user = userRepository.getOne(id);
+
+        articleRepository.deleteAllByAuthor(user);
+        userRepository.delete(user);
     }
 
     public void register(UserRegisterModel userRegisterModel){
@@ -40,6 +71,10 @@ public class UserDao {
         if(auth != null){
             new SecurityContextLogoutHandler().logout(request,response,auth);
         }
+    }
+
+    public boolean isHimEmail(String email, Integer id){
+        return userRepository.getOne(id).getEmail().equals(email);
     }
 
     public boolean emailIsExist(String email){
