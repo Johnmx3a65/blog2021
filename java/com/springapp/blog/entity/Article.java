@@ -20,10 +20,6 @@ public class Article {
 
     private Set<Tag> tags;
 
-    private byte[] articlePicture;
-
-    private String articlePictureBase64;
-
     public Article() {
     }
 
@@ -91,23 +87,6 @@ public class Article {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    @Column(name = "articlePicture")
-    public byte[] getArticlePicture() {
-        return articlePicture;
-    }
-
-    public void setArticlePicture(byte[] articlePicture) {
-        this.articlePicture = articlePicture;
-    }
-
-    public String getArticlePictureBase64() {
-        return articlePictureBase64;
-    }
-
-    public void setArticlePictureBase64(String articleBase64) {
-        this.articlePictureBase64 = articleBase64;
     }
 
     @Transient
