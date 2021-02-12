@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
 
-<head th:include="fragments/head" th:with="pageTitle='SHOP'"></head>
+    <head th:include="fragments/head" th:with="pageTitle='BLOG'"></head>
 
-<body>
+    <body>
 
-<header th:include="fragments/header"></header>
+        <header th:include="fragments/header"></header>
 
-<main th:include="${view}"></main>
+        <main th:include="${view}"></main>
 
-<footer th:include="fragments/footer"></footer>
+        <footer th:include="fragments/footer"></footer>
 
-<span th:include="fragments/scripts-bundle"></span>
+        <span th:include="fragments/scripts-bundle"></span>
 
-</body>
+    </body>
 </html>
