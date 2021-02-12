@@ -46,7 +46,9 @@ public class UserDao {
 
         dbUser.setEmail(user.getEmail());
         dbUser.setFullName(user.getFullName());
-        dbUser.setPassword(user.getPassword());
+        if (!user.getPassword().isEmpty()){
+            dbUser.setPassword(user.getPassword());
+        }
 
         userRepository.saveAndFlush(dbUser);
     }
