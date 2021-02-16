@@ -31,8 +31,8 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="category">Category</label>
                         <div class="col-sm-6">
-                            <select class="form-control" id="category" required="required">
-                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}" name="category"></option>
+                            <select class="form-control" id="category" required="required" name="category">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                             </select>
                         </div>
                     </div>
