@@ -104,6 +104,7 @@ public class ArticleController {
         return "redirect:/category/" + article.getCategory();
     }
 
+    @PreAuthorize("isAuthenticated")
     @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable("id")Integer id){
         Article article = articleDao.getOne(id);
@@ -116,5 +117,14 @@ public class ArticleController {
         model.addAttribute("article", article);
 
         return "base-layout";
+    }
+
+    @PreAuthorize("isAuthenticated")
+    @PostMapping("/delete/{id}")
+    public String deleteProcess(@PathVariable("id") Integer id){
+        Integer categoryId = articleDao.getOne(id).getCategory().getId();
+        articleDao.delete(id);
+
+        return "redirect:/category/" + categoryId;
     }
 }

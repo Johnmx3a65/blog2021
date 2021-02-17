@@ -53,4 +53,8 @@ public class ArticleDao {
 
         articleRepository.saveAndFlush(article);
     }
+
+    public void delete(Integer id) {
+        articleRepository.deleteById(id);
+    }
 }
