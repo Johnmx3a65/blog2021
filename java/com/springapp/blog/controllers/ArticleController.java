@@ -103,4 +103,18 @@ public class ArticleController {
 
         return "redirect:/category/" + article.getCategory();
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable("id")Integer id){
+        Article article = articleDao.getOne(id);
+
+        if (article == null){
+            return "redirect:/";
+        }
+
+        model.addAttribute("view", "article/delete");
+        model.addAttribute("article", article);
+
+        return "base-layout";
+    }
 }
