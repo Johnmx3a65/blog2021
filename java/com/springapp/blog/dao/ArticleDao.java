@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
+import java.util.List;
 
 @Component
 public class ArticleDao {
@@ -33,7 +33,7 @@ public class ArticleDao {
         return articleRepository.findById(id).orElse(null);
     }
 
-    public void create(ArticleModel articleModel, HashSet<Tag> tags){
+    public void create(ArticleModel articleModel, List<Tag> tags){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByEmail(userDetails.getUsername());
         Category category = categoryRepository.getOne(articleModel.getCategory());

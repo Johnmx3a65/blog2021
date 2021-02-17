@@ -4,6 +4,7 @@ import com.springapp.blog.dao.ArticleDao;
 import com.springapp.blog.dao.CategoryDao;
 import com.springapp.blog.dao.TagsDao;
 import com.springapp.blog.entity.Article;
+import com.springapp.blog.entity.Tag;
 import com.springapp.blog.models.ArticleModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/article")
@@ -66,8 +68,23 @@ public class ArticleController {
 
         articleDao.create(articleModel, tagsDao.addNewTags(articleModel.getTags()));
 
-        return "redirect:/";
+        return "redirect:/category/" + articleModel.getCategory();
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable("id") Integer id){
+        Article article = articleDao.getOne(id);
 
+        if (article == null){
+            return "redirect:/";
+        }
+
+        model.addAttribute("view", "article/edit");
+        model.addAttribute("article", article);
+        model.addAttribute("tags", article.getTags().stream().map(Tag::getName).collect(Collectors.joining(", ")));
+        model.addAttribute("categories", categoryDao.list());
+
+        return "base-layout";
+    }
 }

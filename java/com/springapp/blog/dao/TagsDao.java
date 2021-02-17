@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 @Component
 public class TagsDao {
@@ -17,11 +19,11 @@ public class TagsDao {
         this.tagRepository = tagRepository;
     }
 
-    public HashSet<Tag> addNewTags(@org.jetbrains.annotations.NotNull String tags) {
+    public List<Tag> addNewTags(@org.jetbrains.annotations.NotNull String tags) {
 
-        HashSet<Tag> tagHashSet = new HashSet<>();
+        List<Tag> tagHashSet = new LinkedList<>();
 
-        String[] tagNames = tags.split("\\s");
+        String[] tagNames = tags.split(",\\s*");
 
         for (String tagName : tagNames){
             if(!tagName.equals("")){

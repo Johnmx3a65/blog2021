@@ -1,8 +1,7 @@
 package com.springapp.blog.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "articles")
@@ -18,12 +17,12 @@ public class Article {
 
     private Category category;
 
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
     public Article() {
     }
 
-    public Article(String title, String content, User author, Category category, HashSet<Tag> tags) {
+    public Article(String title, String content, User author, Category category, List<Tag> tags) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -33,11 +32,11 @@ public class Article {
 
     @ManyToMany()
     @JoinColumn(table = "articles_tags")
-    public Set<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
