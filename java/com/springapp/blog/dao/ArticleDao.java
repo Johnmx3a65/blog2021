@@ -41,4 +41,16 @@ public class ArticleDao {
 
         articleRepository.saveAndFlush(article);
     }
+
+    public void edit(Integer id, ArticleModel articleModel, List<Tag> addNewTags) {
+        Category category = categoryRepository.getOne(articleModel.getCategory());
+        Article article = articleRepository.getOne(id);
+
+        article.setTitle(articleModel.getTitle());
+        article.setContent(articleModel.getContent());
+        article.setTags(addNewTags);
+        article.setCategory(category);
+
+        articleRepository.saveAndFlush(article);
+    }
 }

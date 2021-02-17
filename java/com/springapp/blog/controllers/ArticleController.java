@@ -87,4 +87,20 @@ public class ArticleController {
 
         return "base-layout";
     }
+
+    @PreAuthorize("isAuthenticated")
+    @PostMapping("/edit/{id}")
+    public String editProcess(Model model, @PathVariable("id") Integer id, @ModelAttribute("article") @Valid ArticleModel article, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("view", "article/edit");
+            model.addAttribute("tags", article.getTags());
+            model.addAttribute("categories", categoryDao.list());
+            return "base-layout";
+        }
+
+        articleDao.edit(id, article, tagsDao.addNewTags(article.getTags()));
+
+        return "redirect:/category/" + article.getCategory();
+    }
 }
