@@ -3,6 +3,7 @@ package com.springapp.blog.controllers;
 import com.springapp.blog.dao.ArticleDao;
 import com.springapp.blog.dao.CategoryDao;
 import com.springapp.blog.dao.TagsDao;
+import com.springapp.blog.dao.UserDao;
 import com.springapp.blog.entity.Article;
 import com.springapp.blog.entity.Tag;
 import com.springapp.blog.models.ArticleModel;
@@ -23,12 +24,14 @@ public class ArticleController {
     private final ArticleDao articleDao;
     private final CategoryDao categoryDao;
     private final TagsDao tagsDao;
+    private final UserDao userDao;
 
     @Autowired
-    public ArticleController(ArticleDao articleDao, CategoryDao categoryDao, TagsDao tagsDao) {
+    public ArticleController(ArticleDao articleDao, CategoryDao categoryDao, TagsDao tagsDao, UserDao userDao) {
         this.articleDao = articleDao;
         this.categoryDao = categoryDao;
         this.tagsDao = tagsDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/{id}")
@@ -41,8 +44,7 @@ public class ArticleController {
 
         model.addAttribute("view", "article/details");
         model.addAttribute("article", article);
-        model.addAttribute("author", article.getAuthor());
-
+        model.addAttribute("user", userDao.getUserFromUserDetails());
         return "base-layout";
     }
 
@@ -74,11 +76,15 @@ public class ArticleController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") Integer id){
-        Article article = articleDao.getOne(id);
-
-        if (article == null){
+        if (!articleDao.isExist(id)){
             return "redirect:/";
         }
+        
+        if(!articleDao.isAuthor(id)){
+            return "redirect:/";
+        }
+
+        Article article = articleDao.getOne(id);
 
         model.addAttribute("view", "article/edit");
         model.addAttribute("article", article);
@@ -107,11 +113,15 @@ public class ArticleController {
     @PreAuthorize("isAuthenticated")
     @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable("id")Integer id){
-        Article article = articleDao.getOne(id);
-
-        if (article == null){
+        if (!articleDao.isExist(id)){
             return "redirect:/";
         }
+
+        if(!articleDao.isAuthor(id)){
+            return "redirect:/";
+        }
+
+        Article article = articleDao.getOne(id);
 
         model.addAttribute("view", "article/delete");
         model.addAttribute("article", article);

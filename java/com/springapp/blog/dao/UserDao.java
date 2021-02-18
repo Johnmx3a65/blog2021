@@ -8,8 +8,10 @@ import com.springapp.blog.repository.ArticleRepository;
 import com.springapp.blog.repository.RoleRepository;
 import com.springapp.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
@@ -73,6 +75,14 @@ public class UserDao {
         if(auth != null){
             new SecurityContextLogoutHandler().logout(request,response,auth);
         }
+    }
+
+    public User getUserFromUserDetails(){
+        if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken){
+            return null;
+        }
+
+        return userRepository.findByEmail(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
     }
 
     public boolean isHimEmail(String email, Integer id){

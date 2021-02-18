@@ -57,4 +57,15 @@ public class ArticleDao {
     public void delete(Integer id) {
         articleRepository.deleteById(id);
     }
+
+    public boolean isAuthor(Integer id){
+        Article article = articleRepository.getOne(id);
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return userRepository.findByEmail(userDetails.getUsername()).getArticles().contains(article);
+    }
+    public boolean isExist(Integer id){
+        return articleRepository.findById(id).orElse(null) != null;
+    }
 }
