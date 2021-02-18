@@ -58,6 +58,13 @@ public class ArticleDao {
         articleRepository.deleteById(id);
     }
 
+    public List<Article> profile(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByEmail(userDetails.getUsername());
+
+        return articleRepository.findAllByAuthor(user);
+    }
+
     public boolean isAuthor(Integer id){
         Article article = articleRepository.getOne(id);
 

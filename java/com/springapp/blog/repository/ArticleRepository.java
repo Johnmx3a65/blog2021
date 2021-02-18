@@ -7,10 +7,13 @@ import com.springapp.blog.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
+    List<Article> findAllByAuthor(User user);
 
-    public void deleteAllByCategory(Category category);
+    void deleteAllByCategory(Category category);
 
-    public void deleteAllByAuthor(User user);
+    void deleteAllByAuthor(User user);
 }

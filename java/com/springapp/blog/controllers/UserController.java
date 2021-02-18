@@ -1,9 +1,11 @@
 package com.springapp.blog.controllers;
 
+import com.springapp.blog.dao.ArticleDao;
 import com.springapp.blog.dao.UserDao;
 import com.springapp.blog.models.user.UserLoginModel;
 import com.springapp.blog.models.user.UserRegisterModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,10 +22,12 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserDao userDao;
+    private final ArticleDao articleDao;
 
     @Autowired
-    public UserController(UserDao userDao) {
+    public UserController(UserDao userDao, ArticleDao articleDao) {
         this.userDao = userDao;
+        this.articleDao = articleDao;
     }
 
     @GetMapping("/login")
@@ -70,5 +74,14 @@ public class UserController {
         userDao.register(userRegisterModel);
 
         return "redirect:/login";
+    }
+
+    @PreAuthorize("isAuthenticated")
+    @GetMapping("/profile")
+    public String profile(Model model){
+        model.addAttribute("view", "user/profile");
+        model.addAttribute("articles", articleDao.profile());
+
+        return "base-layout";
     }
 }
