@@ -2,7 +2,7 @@ package com.springapp.blog.controllers;
 
 import com.springapp.blog.dao.ArticleDao;
 import com.springapp.blog.dao.CategoryDao;
-import com.springapp.blog.dao.TagsDao;
+import com.springapp.blog.dao.TagDao;
 import com.springapp.blog.dao.UserDao;
 import com.springapp.blog.entity.Article;
 import com.springapp.blog.entity.Tag;
@@ -23,14 +23,14 @@ public class ArticleController {
 
     private final ArticleDao articleDao;
     private final CategoryDao categoryDao;
-    private final TagsDao tagsDao;
+    private final TagDao tagDao;
     private final UserDao userDao;
 
     @Autowired
-    public ArticleController(ArticleDao articleDao, CategoryDao categoryDao, TagsDao tagsDao, UserDao userDao) {
+    public ArticleController(ArticleDao articleDao, CategoryDao categoryDao, TagDao tagDao, UserDao userDao) {
         this.articleDao = articleDao;
         this.categoryDao = categoryDao;
-        this.tagsDao = tagsDao;
+        this.tagDao = tagDao;
         this.userDao = userDao;
     }
 
@@ -68,7 +68,7 @@ public class ArticleController {
             return "base-layout";
         }
 
-        articleDao.create(articleModel, tagsDao.addNewTags(articleModel.getTags()));
+        articleDao.create(articleModel, tagDao.addNewTags(articleModel.getTags()));
 
         return "redirect:/category/" + articleModel.getCategory();
     }
@@ -105,7 +105,7 @@ public class ArticleController {
             return "base-layout";
         }
 
-        articleDao.edit(id, article, tagsDao.addNewTags(article.getTags()));
+        articleDao.edit(id, article, tagDao.addNewTags(article.getTags()));
 
         return "redirect:/category/" + article.getCategory();
     }

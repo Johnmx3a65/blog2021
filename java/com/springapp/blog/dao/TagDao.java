@@ -5,17 +5,16 @@ import com.springapp.blog.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 @Component
-public class TagsDao {
+public class TagDao {
 
     private final TagRepository tagRepository;
 
     @Autowired
-    public TagsDao(TagRepository tagRepository) {
+    public TagDao(TagRepository tagRepository) {
         this.tagRepository = tagRepository;
     }
 
@@ -38,5 +37,13 @@ public class TagsDao {
             }
         }
         return tagHashSet;
+    }
+
+    public boolean tagIsExist(String name){
+        return tagRepository.existsByName(name);
+    }
+
+    public Tag getTagByName(String name){
+        return tagRepository.findByName(name);
     }
 }
