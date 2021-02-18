@@ -66,6 +66,6 @@ public class ArticleDao {
         return userRepository.findByEmail(userDetails.getUsername()).getArticles().contains(article);
     }
     public boolean isExist(Integer id){
-        return articleRepository.findById(id).orElse(null) != null;
+        return articleRepository.existsById(id);
     }
 }
