@@ -1,7 +1,11 @@
 <main>
     <div class="container body-content">
         <div class="row">
-            <div class="col-md-6" th:each="category : ${categories}">
+            <h2>Categories</h2>
+            <div th:if="${categories.isEmpty}" class="text-center">
+                <span>NO CATEGORIES YET</span>
+            </div>
+            <div th:unless="${categories.isEmpty}" class="col-md-6" th:each="category : ${categories}">
                 <header>
                     <h2>
                         <a th:href="@{/category/{id}(id=${category.id})}" th:text="${category.name + ' (' + #sets.size(category.articles) + ')'}">
