@@ -9,5 +9,6 @@ function changeLimit(){
 
     let limit = tempArray[0];
 
-    window.location.href = window.location.href.replace(limit, `limit=${selectedValue}`);
+    if(limit.localeCompare(`limit=${selectedValue}`) !== 0)
+        window.location.href = window.location.href.replace(limit, `limit=${selectedValue}`);
 }
