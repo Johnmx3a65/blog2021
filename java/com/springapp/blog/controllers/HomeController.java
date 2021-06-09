@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
@@ -29,10 +30,10 @@ public class HomeController {
     }
 
     @GetMapping("/category/{id}")
-    public String listArticles(Model model, @PathVariable("id") Integer id){
+    public String listArticles(Model model, @PathVariable("id") Integer id, @RequestParam(required = false) Integer limit, @RequestParam(required = false) Integer offset){
         model.addAttribute("view", "home/list-articles");
         model.addAttribute("category", categoryDao.getOne(id));
-        model.addAttribute("articles", articleDao.getLimitOffsetByCategory(id, 5, 0));
+        model.addAttribute("articles", articleDao.getLimitOffsetByCategory(id, limit, offset));
 
         return "base-layout";
     }

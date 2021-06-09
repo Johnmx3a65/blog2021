@@ -8,7 +8,7 @@
             <div th:unless="${categories.isEmpty}" class="col-md-6" th:each="category : ${categories}">
                 <header>
                     <h2>
-                        <a th:href="@{/category/{id}(id=${category.id})}" th:text="${category.name + ' (' + #sets.size(category.articles) + ')'}">
+                        <a th:href="@{/category/{id}?limit=10&offset=0(id=${category.id})}" th:text="${category.name + ' (' + #sets.size(category.articles) + ')'}">
                         </a>
                     </h2>
                 </header>
