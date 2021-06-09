@@ -1,5 +1,6 @@
 package com.springapp.blog.controllers;
 
+import com.springapp.blog.dao.ArticleDao;
 import com.springapp.blog.dao.CategoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class HomeController {
 
     private final CategoryDao categoryDao;
+    private final ArticleDao articleDao;
 
     @Autowired
-    public HomeController(CategoryDao categoryDao) {
+    public HomeController(CategoryDao categoryDao, ArticleDao articleDao) {
         this.categoryDao = categoryDao;
+        this.articleDao = articleDao;
     }
 
     @GetMapping("/")
@@ -29,7 +32,7 @@ public class HomeController {
     public String listArticles(Model model, @PathVariable("id") Integer id){
         model.addAttribute("view", "home/list-articles");
         model.addAttribute("category", categoryDao.getOne(id));
-        model.addAttribute("articles", categoryDao.getOne(id).getArticles());
+        model.addAttribute("articles", articleDao.getLimitOffsetByCategory(id, 5, 0));
 
         return "base-layout";
     }

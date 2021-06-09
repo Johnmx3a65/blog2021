@@ -33,6 +33,10 @@ public class ArticleDao {
         return articleRepository.findById(id).orElse(null);
     }
 
+    public List<Article> getLimitOffsetByCategory(int category_id, int limit, int offset){
+        return articleRepository.findLimitOffsetByCategory(category_id, limit, offset);
+    }
+
     public void create(ArticleModel articleModel, List<Tag> tags){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByEmail(userDetails.getUsername());
