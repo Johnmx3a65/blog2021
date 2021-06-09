@@ -1,6 +1,7 @@
 package com.springapp.blog.models;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class ArticleModel {
     private Integer id;
@@ -11,6 +12,7 @@ public class ArticleModel {
     @NotEmpty(message = "Content should not be empty")
     private String content;
 
+    @Pattern(regexp = "(([A-Za-z]+,\\s*)*([A-Za-z]+($|\\s*)))", message = "Tags should match the pattern [tag1,tag2,tag3...]")
     private String tags;
 
     private Integer category;
