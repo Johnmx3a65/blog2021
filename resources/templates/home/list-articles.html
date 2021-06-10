@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label for="article-limit">Articles max count per page:</label>
-                <select name="article-limit" id="article-limit" onchange="changeLimit();">
+                <select class="form-control" name="article-limit" id="article-limit" onchange="changeLimit();">
                     <option id="article-limit-option-5" value="5">5</option>
                     <option id="article-limit-option-10" value="10">10</option>
                     <option id="article-limit-option-15" value="15">15</option>
@@ -38,7 +38,15 @@
                 </select>
             </div>
             <div class="col-md-6">
-
+                <nav aria-label="Page navigation example">
+                    <ul class="pull-right pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
